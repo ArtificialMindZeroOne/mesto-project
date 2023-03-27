@@ -51,30 +51,30 @@ initialCards.reverse();
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  formElementNew.reset();
 }
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
-function openProfile () {
-openPopup(popupProfile);
-labelName.value = nameInput.textContent;
-labelJob.value = jobInput.textContent;
+function openProfile() {
+  openPopup(popupProfile);
+  labelName.value = nameInput.textContent;
+  labelJob.value = jobInput.textContent;
 }
 
-function newCard () {
+function newCard() {
   openPopup(popupAdd);
-  }
+}
 
-  function openImg () {
-    openPopup(popupOpenImg);
-    }
+function openImg() {
+  openPopup(popupOpenImg);
+}
 
- editCard.addEventListener('click', openProfile);
- addCard.addEventListener('click', newCard);
- imgCard.addEventListener('click', openImg);
-
+editCard.addEventListener('click', openProfile);
+addCard.addEventListener('click', newCard);
+imgCard.addEventListener('click', openImg);
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
@@ -100,59 +100,12 @@ const createCard = (link, name) => {
   const itemTitle = cardElement.querySelector('.element__title').textContent = `${name}`;
   itemImg.src = `${link}`;
   itemImg.alt = `${name}`;
-  cardsElements.append(cardElement);
-
-  const heartActive = cardElement.querySelector('.element__group');
-  heartActive.addEventListener('click', () => {
-    heartActive.classList.toggle('element__group_active')
-  });
-
-  const cardBasket = cardElement.querySelector('.element__basket');
-  cardBasket.addEventListener('click', cardDelete);
-
-  itemImg.addEventListener('click', () => {
-    popupOpenImg.classList.add('popup_opened')
-    imgCard.src = `${link}`;
-    imgCard.alt = `${name}`;
-    imgTitle.textContent = `${name}`;
-  })
+  cardsElements.prepend(cardElement);
 
   function openPopupImg(link, name) {
     itemImg.src = link;
     itemImg.alt = name;
   }
-  return cardElement;
-};
-
-const addCards = (link, name) => {
-  cardsElements.prepend(createCard(link, name))
-};
-
-initialCards.forEach((item) => {
-  addCards(item.link, item.name)
-});
-
-function handleProfileFormSubmitAdd(evt) {
-  evt.preventDefault();
-  const name = labelCardName.value;
-  const link = labelLink.value;
-
-  const newCard = {
-    name,
-    link
-  };
-
-  initialCards.push(newCard)
-  popupAdd.classList.remove('popup_opened')
-
-
-  const cardElement = cardTemplateCont.querySelector('.element').cloneNode(true);
-  const itemImg = cardElement.querySelector('.element__mask-group');
-  const itemTitle = cardElement.querySelector('.element__title').textContent = `${name}`;
-  itemImg.src = `${link}`;
-  itemImg.alt = `${name}`;
-  cardsElements.prepend(cardElement);
-  formElementNew.reset();
 
   const heartActive = cardElement.querySelector('.element__group');
   heartActive.addEventListener('click', () => {
@@ -169,6 +122,22 @@ function handleProfileFormSubmitAdd(evt) {
     imgTitle.textContent = `${name}`;
   })
 
+  return cardElement;
+}
+
+initialCards.forEach((item) => {
+  createCard(item.link, item.name)
+});
+
+function handleAddCardFormSubmit(evt) {
+  evt.preventDefault();
+  const name = labelCardName.value;
+  const link = labelLink.value;
+
+  createCard(link, name);
+
+  formElementNew.reset();
+  popupAdd.classList.remove('popup_opened');
 };
 
-formElementNew.addEventListener('submit', handleProfileFormSubmitAdd);
+formElementNew.addEventListener('submit', handleAddCardFormSubmit);
