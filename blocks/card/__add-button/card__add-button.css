@@ -1,0 +1,27 @@
+.card__add-button {
+    width: 150px;
+    height: 50px;
+    margin: auto 0 auto auto;
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+    transition: .5s ease-in-out;
+    border: 2px solid white;
+    background-image: url(../../../images/Add-Button.svg);
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 2px;
+}
+
+.card__add-button:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 630px) {
+    .card__add-button {
+        width: 282px;
+        margin: 32px auto 0;
+        background-size: 16px 16px;
+    }
+}

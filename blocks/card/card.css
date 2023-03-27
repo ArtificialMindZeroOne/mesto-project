@@ -1,0 +1,22 @@
+.card {
+    max-width: 880px;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto 50px;
+    position: relative;
+}
+
+@media screen and (max-width: 899px) {
+    .card {
+        max-width: 581px;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .card {
+        max-width: 282px;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 36px;
+    }
+}

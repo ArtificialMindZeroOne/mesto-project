@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+    <link rel="stylesheet" href="pages/index.css">
+</head>
+<body class="page">
+  <header class="header">
+    <img src="images/logo.svg" alt='Логотип "Mesto Russia"' class="header__logo">
+  </header>
+  <main>
+  <section class="card">
+    <img src="images/Avatar.png" alt='Портрет Жак-Ив Кусто"' class="card__avatar">
+    <div class="card__profile-info">
+      <div class="card__title-edit">
+        <h1 class="card__title">Жак-Ив Кусто</h1>
+        <button type="button" name="Кнопка редактирования карточки" class="card__edit-button" aria-label="Редактировать">
+        </button>
+      </div>
+      <p class="card__subtitle">Исследователь океана</p>
+    </div>
+     <button type="button" name="Кнопка добавления карточки"  class="card__add-button" aria-label="Добавить">
+     </button>
+  </section>
+  <section class="elements">
+  </section>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
+  </footer>
+  <template id="card">
+    <article class="element">
+      <img class="element__mask-group">
+      <button type="button" name="Корзина"  class="element__basket"  aria-label="Удалить">
+      </button>
+      <div class="element__title-content">
+        <h2 class="element__title"></h2>
+        <button type="button" name="Логотип сердца"  class="element__group">
+        </button>
+      </div>
+    </article>
+  </template>  
+  <div class="popup popup-profile">
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form name="edit-profile">
+        <input type="text" class="popup__label" name="Name">
+        <input type="text" class="popup__label" name="Job">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close-icon" aria-label="Закрыть">
+      </button>
+    </div>
+  </div>
+  <div class="popup popup-add">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form name="add-card">
+        <input type="text" class="popup__label" name="CardName" placeholder="Название">
+        <input type="text" class="popup__label" name="Link" placeholder="Ссылка на картинку">
+        <button type="submit" class="popup__save-button">Создать</button>
+      </form>
+      <button type="button" class="popup__close-icon" aria-label="Закрыть">
+      </button>
+    </div>
+  </div>
+  <div class="popup popup-open-img">
+    <div class="popup__open-img-container">
+      <img class="popup__opened-img">
+      <button type="button" class="popup__close-icon" aria-label="Закрыть">
+      </button>
+      <p class="popup__img-title"></p>
+      </div>
+  </div>
+  <script src="./script/script.js"></script>
+</body>
+</html>
