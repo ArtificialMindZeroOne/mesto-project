@@ -51,7 +51,6 @@ initialCards.reverse();
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  formElementNew.reset();
 }
 
 function openPopup(popup) {
@@ -66,6 +65,7 @@ function openProfile() {
 
 function newCard() {
   openPopup(popupAdd);
+  formElementNew.reset();
 }
 
 function openImg() {
@@ -85,7 +85,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   nameInput.textContent = labelName.value;
   jobInput.textContent = labelJob.value;
-  popupProfile.classList.remove('popup_opened');
+  closePopup(popupProfile);
 }
 
 formElement.addEventListener('submit', handleProfileFormSubmit);
@@ -100,7 +100,6 @@ const createCard = (link, name) => {
   const itemTitle = cardElement.querySelector('.element__title').textContent = `${name}`;
   itemImg.src = `${link}`;
   itemImg.alt = `${name}`;
-  cardsElements.prepend(cardElement);
 
   function openPopupImg(link, name) {
     itemImg.src = link;
@@ -116,7 +115,7 @@ const createCard = (link, name) => {
   cardBasket.addEventListener('click', cardDelete);
 
   itemImg.addEventListener('click', () => {
-    popupOpenImg.classList.add('popup_opened')
+    openPopup(popupOpenImg);
     imgCard.src = `${link}`;
     imgCard.alt = `${name}`;
     imgTitle.textContent = `${name}`;
@@ -125,8 +124,12 @@ const createCard = (link, name) => {
   return cardElement;
 }
 
+const addCards = (link, name) => {
+  cardsElements.prepend(createCard(link, name));
+};
+
 initialCards.forEach((item) => {
-  createCard(item.link, item.name)
+  addCards(item.link, item.name)
 });
 
 function handleAddCardFormSubmit(evt) {
@@ -134,10 +137,10 @@ function handleAddCardFormSubmit(evt) {
   const name = labelCardName.value;
   const link = labelLink.value;
 
-  createCard(link, name);
+  addCards(link, name);
 
   formElementNew.reset();
-  popupAdd.classList.remove('popup_opened');
+  closePopup(popupAdd);
 };
 
 formElementNew.addEventListener('submit', handleAddCardFormSubmit);
