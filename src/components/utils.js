@@ -1,33 +1,15 @@
-import { popupProfile, popupAdd, popupOpenImg } from './index.js';
+import { openPopup } from '../components/modal.js';
+import { popupAdd, popupProfile, labelName, nameInput, labelJob, jobInput, formElementNew } from '../components/consts.js';
+import { deleteErrors } from '../components/modal.js';
 
-export const deleteErrors = (formElement) => {
-    const errorsText = Array.from(document.querySelectorAll(`.form__input-error`));
-    const errorsLine = Array.from(document.querySelectorAll(`.form__input_type_error`));
-    errorsText.forEach((inputElement) => {
-      inputElement.textContent = '';
-    })
-    errorsLine.forEach((inputElement) => {
-      inputElement.classList.remove('form__input_type_error');
-    })
-  };
-
-export function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-  }
-
-export function openPopup(popup) {
-    popup.classList.add('popup_opened');
+export function openProfile() {
+    openPopup(popupProfile);
+    labelName.value = nameInput.textContent;
+    labelJob.value = jobInput.textContent;
     deleteErrors();
-  }
-  
-export function openImg() {
-    openPopup(popupOpenImg);
-  }
-  
-export  function keyHandler(evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popupProfile);
-      closePopup(popupAdd);
-      closePopup(popupOpenImg);
-    }
-  };
+}
+
+export function openAddCardPopup() {
+    openPopup(popupAdd);
+    formElementNew.reset();
+}
