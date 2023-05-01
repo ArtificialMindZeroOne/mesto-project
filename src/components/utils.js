@@ -6,10 +6,11 @@ export function openProfile() {
     openPopup(popupProfile);
     labelName.value = nameInput.textContent;
     labelJob.value = jobInput.textContent;
-    deleteErrors();
+    deleteErrors(popupProfile);
 }
 
 export function openAddCardPopup() {
     openPopup(popupAdd);
     formElementNew.reset();
+    deleteErrors(popupAdd);
 }

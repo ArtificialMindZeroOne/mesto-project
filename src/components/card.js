@@ -1,7 +1,7 @@
 import { popupProfile, popupAdd, popupOpenImg, cardTemplateCont, imgCard, imgTitle } from './consts.js';
 import { openPopup, closePopup } from './modal.js';
 
-export const createCard = (link, name, card) => {
+export const createCard = (link, name, cardTemplate) => {
   const cardElement = cardTemplateCont.querySelector('.element').cloneNode(true);
   const itemImg = cardElement.querySelector('.element__mask-group');
   cardElement.querySelector('.element__title').textContent = `${name}`;

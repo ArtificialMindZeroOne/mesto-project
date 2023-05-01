@@ -19,3 +19,5 @@ export const cardTemplateCont = document.querySelector('#card').content;
 export const imgCard = document.querySelector('.popup__opened-img');
 export const imgTitle = document.querySelector('.popup__img-title');
 export const saveButton = document.querySelectorAll('.popup__save-button');
+export const formProfileSubmitButton = document.querySelector('#form-profile-save');
+export const formAddCardSubmitButton = document.querySelector('#form-add-card-save');
