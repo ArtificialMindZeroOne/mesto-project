@@ -2,23 +2,22 @@ import { labelCardName, labelLink, formElementNew, popupAdd, nameInput, labelNam
 import { toggleButtonState } from './validate.js';
 import { createCard } from './card.js';
 
-const closeByOverlayClose = () => {
-  document.addEventListener('click', function (evt) {
-    if (evt.target.classList.contains('popup_opened')) {
-      const openedPopup = document.querySelector('.popup_opened');
-      closePopup(openedPopup);
-    }
-  })
-};
+const closeByOverlayClose = (evt) => {
+  if (evt.target.classList.contains('popup_opened')) {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+}
 
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
-  closeByOverlayClose();
+  document.addEventListener('mousedown', closeByOverlayClose);
   document.addEventListener('keydown', closeByEscape);
 }
 
 export function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('mousedown', closeByOverlayClose);
   document.removeEventListener('keydown', closeByEscape);
 }
 
