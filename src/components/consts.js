@@ -21,3 +21,8 @@ export const imgTitle = document.querySelector('.popup__img-title');
 export const saveButton = document.querySelectorAll('.popup__save-button');
 export const formProfileSubmitButton = document.querySelector('#form-profile-save');
 export const formAddCardSubmitButton = document.querySelector('#form-add-card-save');
+export const numberOfLikes = document.querySelector('.element__numberOfLikes');
+export const basketButton = document.querySelector('.element__basket');
+export const basketButtonAccept = document.querySelector('.popup__busket-button');
+
+

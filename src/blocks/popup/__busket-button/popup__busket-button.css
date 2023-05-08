@@ -1,0 +1,33 @@
+.popup__busket-button {
+    width: 358px;
+    height: 50px;
+    background-color: black;
+    display: flex;
+    margin: 32px auto 36px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+    transition: .5s ease-in-out;
+    color: white;
+    font-size: 18px;
+    line-height: 21.78px;
+    font-weight: 400;
+    border-radius: 2px;
+    border: 0;
+}
+
+.popup__busket-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+@media screen and (max-width: 530px) {
+    .popup__busket-button {
+        width: 238px;
+        height: 46px;
+        font-size: 14px;
+        line-height: 16.94px;
+        margin-bottom: 25px;
+    }
+}

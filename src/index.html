@@ -14,11 +14,11 @@
     <img src="<%=require('./images/Avatar.png')%>" alt='Портрет Жак-Ив Кусто"' class="card__avatar">
     <div class="card__profile-info">
       <div class="card__title-edit">
-        <h1 class="card__title">Жак-Ив Кусто</h1>
+        <h1 class="card__title"></h1>
         <button type="button" name="Кнопка редактирования карточки" class="card__edit-button" aria-label="Редактировать">
         </button>
       </div>
-      <p class="card__subtitle">Исследователь океана</p>
+      <p class="card__subtitle"></p>
     </div>
      <button type="button" name="Кнопка добавления карточки"  class="card__add-button" aria-label="Добавить">
      </button>
@@ -38,6 +38,7 @@
         <h2 class="element__title"></h2>
         <button type="button" name="Логотип сердца"  class="element__group">
         </button>
+        <span class="element__numberOfLikes">0</span>
       </div>
     </article>
   </template>  
@@ -76,6 +77,15 @@
       </button>
       <p class="popup__img-title"></p>
       </div>
+  </div>
+  <div class="popup popup__busket">
+    <div class="popup__container">
+      <h2 class="popup__title">Вы уверены?</h2>
+        <button type="submit" class="popup__busket-button">Да</button>
+      </form>
+      <button type="button" class="popup__close-icon" aria-label="Закрыть">
+      </button>
+    </div>
   </div>
 </body>
 </html>
