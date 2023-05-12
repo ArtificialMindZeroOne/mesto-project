@@ -1,0 +1,16 @@
+.card__avatar-edit {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0);
+    opacity: 0;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+.card__avatar-edit:hover {
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 1;
+}

@@ -23,6 +23,9 @@ export const formProfileSubmitButton = document.querySelector('#form-profile-sav
 export const formAddCardSubmitButton = document.querySelector('#form-add-card-save');
 export const numberOfLikes = document.querySelector('.element__numberOfLikes');
 export const basketButton = document.querySelector('.element__basket');
-export const basketButtonAccept = document.querySelector('.popup__busket-button');
-
-
+export const basketButtonAccept = document.querySelector('.popup__basket-button');
+export const avatarEditButton = document.querySelector('.card__avatar-edit');
+export const avatarImg = document.querySelector('.popup__edit-img');
+export const avatarImgButtonAcept = document.querySelector('[name="edit-img"]');
+export const labelImgUrl = document.querySelector('[name="Img-link"]');
+export const imgCardAvatar = document.querySelector('.card__avatar');

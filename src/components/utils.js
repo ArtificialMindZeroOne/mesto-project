@@ -4,9 +4,9 @@ import { deleteErrors } from '../components/modal.js';
 
 export function openProfile() {
     openPopup(popupProfile);
-    fetch('https://nomoreparties.co/v1/plus-cohort-23/users/me', {
+    fetch('https://nomoreparties.co/v1/plus-cohort-24/users/me', {
         headers: {
-            authorization: '1c1e41e8-343f-4a5c-8bcc-c0a790fbb38f'
+            authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1'
         }
     })
         .then((res) => {
