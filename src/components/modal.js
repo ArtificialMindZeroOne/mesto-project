@@ -1,6 +1,7 @@
 import { labelCardName, labelLink, formElementNew, popupAdd, nameInput, labelName, jobInput, labelJob, cardsElements, popupProfile, popupOpenImg, cardTemplate } from './consts.js';
 import { toggleButtonState } from './validate.js';
 import { createCard } from './card.js';
+import { request, config } from '../components/api.js';
 
 const closeByOverlayClose = (evt) => {
   if (evt.target.classList.contains('popup_opened')) {

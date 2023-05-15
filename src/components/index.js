@@ -1,55 +1,56 @@
 import '../pages/index.css';
 import { closePopup, openPopup, closeByEscape } from '../components/modal.js';
-import { openProfile, openAddCardPopup } from '../components/utils.js';
+import { openProfile, openAddCardPopup, renderLoading } from '../components/utils.js';
 import { createCard, valueId, addCard } from '../components/card.js';
 import { showInputError, hideInputError, checkInputValidity, hasInvalidInput, toggleButtonState, setEventListeners, enableValidation } from '../components/validate.js';
 import { popupProfileOpenButton, popupAddCardButton, popup, popupCloseButtons, formElement, elementTitle, cardTemplate, cardsElements, popupAdd, formElementNew, popupProfile, labelName, nameInput, labelJob, jobInput, saveButton, labelCardName, labelLink, imgCard, formProfileSubmitButton, formAddCardSubmitButton, cardTemplateCont, popupOpenImg, numberOfLikes, basketButton, basketButtonAccept, avatarEditButton, avatarImg, avatarImgButtonAcept, labelImgUrl, imgCardAvatar } from '../components/consts.js';
-import { titelProfile, formElements } from '../components/api.js';
+import { request, config } from '../components/api.js';
+
+export let userId;
+
+request(`${config.baseUrl}/users/me`, { headers: config.headers })
+  .then((res) => {
+    nameInput.textContent = res.name
+    jobInput.textContent = res.about
+    imgCardAvatar.src = res.avatar;
+    imgCardAvatar.alt = 'аватар';
+    userId = res._id;
+  });
 
 avatarImgButtonAcept.addEventListener('submit', () => {
-  renderLoading(true);
-  fetch('https://nomoreparties.co/v1/plus-cohort-24/users/me/avatar ', {
-    method: 'PATCH',
-    headers: {
-      authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      avatar: labelImgUrl.value
+
+  request(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH', headers: config.headers, body: JSON.stringify({ avatar: labelImgUrl.value })
+  })
+    .then((res) => {
+      renderLoading(true, saveButton);
+      closePopup(avatarImg)
     })
-  });
   imgCardAvatar.src = labelImgUrl.value;
-  closePopup(avatarImg);
 });
 
 avatarEditButton.addEventListener('click', () => {
   openPopup(avatarImg);
+
 });
 
-function renderLoading(isLoading) {
-  if (isLoading) {
-    saveButton.textContent = 'Сохранение...'
-  }
-};
+request(`${config.baseUrl}/cards`, { headers: config.headers })
+  .then((res) => {
+    res.reverse();
+    res.forEach((item) => {
+      addCard(item.link, item.name, item.likes.length, item._id, item.owner._id, item.likes)
+    })
+  })
 
 function handleProfileFormSubmit(evt) {
-  renderLoading(true);
-  fetch('https://nomoreparties.co/v1/plus-cohort-24/users/me', {
-    method: 'PATCH',
-    headers: {
-      authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: labelName.value,
-      about: labelJob.value
-    })
-  });
+  request(`${config.baseUrl}/users/me`, { method: 'PATCH', headers: config.headers, body: JSON.stringify({ name: labelName.value, about: labelJob.value }) })
+    .then((res) => {
+      renderLoading(true, saveButton);
+      closePopup(popupProfile)
+    });
 
   nameInput.textContent = labelName.value
   jobInput.textContent = labelJob.value
-
-  closePopup(popupProfile);
 
   formProfileSubmitButton.classList.add('popup__save-button_inactive');
   formProfileSubmitButton.disabled = true;
@@ -58,27 +59,15 @@ function handleProfileFormSubmit(evt) {
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  fetch('https://nomoreparties.co/v1/plus-cohort-24/cards', {
-    method: 'POST',
-    headers: {
-      authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: labelCardName.value,
-      link: labelLink.value
-    })
-  });
 
-  const name = labelCardName.value;
-  const link = labelLink.value;
-  const likes = 0;
-
-  addCard(link, name, likes);
+  request(`${config.baseUrl}/cards`, { method: 'POST', headers: config.headers, body: JSON.stringify({ name: labelCardName.value, link: labelLink.value }) })
+    .then((res) => {
+      renderLoading(true, saveButton);
+      addCard(res.link, res.name, res.likes.length, res._id, res.owner._id, res.likes);
+      closePopup(popupAdd);
+    });
 
   formElementNew.reset();
-
-  closePopup(popupAdd);
 
   formAddCardSubmitButton.classList.add('popup__save-button_inactive');
   formAddCardSubmitButton.disabled = true

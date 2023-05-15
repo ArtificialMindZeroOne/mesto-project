@@ -1,13 +1,17 @@
-import { popupProfile, popupAdd, popupOpenImg, cardTemplateCont, imgCard, imgTitle, basketButtonAccept, cardsElements } from './consts.js';
+import { popupProfile, popupAdd, popupOpenImg, cardTemplateCont, imgCard, imgTitle, basketButtonAccept, cardsElements, saveButton } from './consts.js';
 import { openPopup, closePopup } from './modal.js';
+import { request, config } from '../components/api.js';
+import { userId } from '../components/index.js';
 
 const elementBasket = document.querySelector('.popup__basket');
 
-export const createCard = (link, name, likes, ID, ownerId, userId, cardTemplate, local) => {
+let cardId;
+
+export const createCard = (link, name, likesLength, id, ownerId, likes, cardTemplate) => {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   const itemImg = cardElement.querySelector('.element__mask-group');
   cardElement.querySelector('.element__title').textContent = `${name}`;
-  cardElement.querySelector('.element__numberOfLikes').textContent = `${likes}`;
+  cardElement.querySelector('.element__numberOfLikes').textContent = `${likesLength}`;
   itemImg.src = `${link}`;
   itemImg.alt = `${name}`;
 
@@ -21,118 +25,75 @@ export const createCard = (link, name, likes, ID, ownerId, userId, cardTemplate,
   const heartActive = cardElement.querySelector('.element__group');
   const basketButton = cardElement.querySelector('.element__basket');
 
-  fetch('https://nomoreparties.co/v1/plus-cohort-24/users/me', {
-    headers: {
-      authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1'
-    }
-  })
+  request(`${config.baseUrl}/users/me`, { headers: config.headers })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then((result) => {
-
-      const likesString = JSON.stringify(userId);
-
-      if (likesString.includes(result._id)) {
+      const string = JSON.stringify(likes);
+      if (string.includes(res._id)) {
         heartActive.classList.add('element__group_active')
       }
-      if (ownerId === result._id) {
-        basketButton.classList.add('element__basket_my')
-      }
-    })
-    .catch((err) => {
-      console.log(err);
     });
+
+  if (ownerId === userId) {
+    basketButton.classList.add('element__basket_my')
+  }
 
   const cardBasket = cardElement.querySelector('.element__basket');
 
   const numberOfLikes = cardElement.querySelector('.element__numberOfLikes');
-  numberOfLikes.textContent = `${likes}`;
 
-  let valueId;
+  const valueId = `${id}`;
 
   cardBasket.addEventListener('click', () => {
     openPopup(elementBasket);
-    valueId = `${ID}`;
+    cardId = `${id}`;
 
-  })
-
-  basketButtonAccept.addEventListener('click', () => {
-
-    deleteCard(valueId);
-    function deleteCard(ID) {
-      fetch(`https://nomoreparties.co/v1/plus-cohort-24/cards/${ID}`, {
-        method: 'DELETE',
-        headers: {
-          authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1',
-          'Content-Type': 'application/json'
-        }
-      })
-
-      fetch('https://nomoreparties.co/v1/plus-cohort-24/users/me', {
-        headers: {
-          authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1'
-        }
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-        })
-        .then((result) => {
-          if (ownerId === result._id) {
-            cardElement.closest('.element').remove();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      closePopup(elementBasket);
-
-    }
   });
 
   heartActive.addEventListener('click', () => {
-    const b = numberOfLikes.textContent;
     if (heartActive.classList.contains('element__group_active')) {
-      cardElement.querySelector('.element__numberOfLikes').textContent = b - 1;
+      deleteLike(valueId);
     } else {
-      cardElement.querySelector('.element__numberOfLikes').textContent = b - (-1);
+      addLike(valueId);
     }
     heartActive.classList.toggle('element__group_active')
 
-    valueId = `${ID}`;
-    addLike(valueId);
-    deleteLike(valueId);
-
-    addLike(valueId);
     function addLike(ID) {
-      fetch(`https://nomoreparties.co/v1/plus-cohort-24/cards/${ID}/likes`, {
-        method: 'PUT',
-        headers: {
-          authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1',
-          'Content-Type': 'application/json'
-        }
-      })
-
+      request(`${config.baseUrl}/cards/${ID}/likes`, { method: 'PUT', headers: config.headers })
+        .then((res) => {
+          const reloadLikes = res.likes.length;
+          numberOfLikes.textContent = `${reloadLikes}`;
+        })
     };
 
     function deleteLike(ID) {
-      fetch(`https://nomoreparties.co/v1/plus-cohort-24/cards/${ID}/likes`, {
-        method: 'DELETE',
-        headers: {
-          authorization: 'caadd57f-8e95-4623-a4c1-d6d937fceff1',
-          'Content-Type': 'application/json'
-        }
-      })
+      request(`${config.baseUrl}/cards/${ID}/likes`, { method: 'DELETE', headers: config.headers })
+        .then((res) => {
+          const reloadLikes = res.likes.length;
+          numberOfLikes.textContent = `${reloadLikes}`;
+        })
     };
   });
 
   return cardElement;
 }
 
-export const addCard = (link, name, likes, ID, ownerId, userId, cardTemplate) => {
-  cardsElements.prepend(createCard(link, name, likes, ID, ownerId, userId, cardTemplateCont));
+export const addCard = (link, name, likesLength, id, ownerId, likes, cardTemplate) => {
+  cardsElements.prepend(createCard(link, name, likesLength, id, ownerId, likes, cardTemplateCont));
 };
+
+basketButtonAccept.addEventListener('click', () => {
+  deleteCard(cardId);
+  function deleteCard(ID) {
+    request(`${config.baseUrl}/cards/${ID}`, { method: 'DELETE', headers: config.headers })
+      .then((res) => {
+        closePopup(elementBasket);
+        request(`${config.baseUrl}/cards`, { headers: config.headers })
+          .then((res) => {
+            res.reverse();
+            res.forEach((item) => {
+              addCard(item.link, item.name, item.likes.length, item._id, item.owner._id, item.likes)
+            })
+          })
+      })
+  };
+});

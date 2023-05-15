@@ -63,4 +63,3 @@ export function enableValidation(config) {
     setEventListeners(formElement, config);
   });
 };
-
