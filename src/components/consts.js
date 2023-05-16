@@ -29,3 +29,8 @@ export const avatarImg = document.querySelector('.popup__edit-img');
 export const avatarImgButtonAcept = document.querySelector('[name="edit-img"]');
 export const labelImgUrl = document.querySelector('[name="Img-link"]');
 export const imgCardAvatar = document.querySelector('.card__avatar');
+export const formNewImg = document.querySelector('[name="edit-img"]');
+export const saveButtonImg = document.querySelector('.save-button-img');
+export const formAddImgSubmitButton = document.querySelector('#form-add-img');
+export const saveButtonEdit = document.querySelector('.save-button-edit');
+export const saveButtonAdd = document.querySelector('.save-button-add');
