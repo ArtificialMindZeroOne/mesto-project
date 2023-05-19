@@ -2,25 +2,25 @@ import { labelCardName, labelLink, formElementNew, popupAdd, nameInput, labelNam
 import { toggleButtonState } from './validate.js';
 import { createCard } from './card.js';
 import { request, config } from '../components/api.js';
+import { deleteErrors } from '../components/utils.js';
 
 const closeByOverlayClose = (evt) => {
   if (evt.target.classList.contains('popup_opened')) {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  }
-}
+    closePopup(evt.target);
+  };
+};
 
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('mousedown', closeByOverlayClose);
   document.addEventListener('keydown', closeByEscape);
-}
+};
 
 export function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('mousedown', closeByOverlayClose);
   document.removeEventListener('keydown', closeByEscape);
-}
+};
 
 export function closeByEscape(evt) {
   if (evt.key === 'Escape') {
@@ -29,13 +29,15 @@ export function closeByEscape(evt) {
   }
 };
 
-export const deleteErrors = (formElement) => {
-  const errorsText = Array.from(formElement.querySelectorAll(`.form__input-error`));
-  const errorsLine = Array.from(formElement.querySelectorAll(`.form__input_type_error`));
-  errorsText.forEach((inputElement) => {
-    inputElement.textContent = '';
-  })
-  errorsLine.forEach((inputElement) => {
-    inputElement.classList.remove('form__input_type_error');
-  })
-};  
+export function openProfile() {
+  openPopup(popupProfile);
+  deleteErrors(popupProfile);
+  labelName.value = nameInput.textContent;
+  labelJob.value = jobInput.textContent;
+};
+
+export function openAddCardPopup() {
+  openPopup(popupAdd);
+  formElementNew.reset();
+  deleteErrors(popupAdd);
+};
