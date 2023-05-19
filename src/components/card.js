@@ -7,6 +7,8 @@ const elementBasket = document.querySelector('.popup__basket');
 
 let cardId;
 
+let localCard;
+
 export const createCard = (link, name, likesLength, id, ownerId, likes, cardTemplate) => {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   const itemImg = cardElement.querySelector('.element__mask-group');
@@ -42,7 +44,7 @@ export const createCard = (link, name, likesLength, id, ownerId, likes, cardTemp
   cardBasket.addEventListener('click', () => {
     openPopup(elementBasket);
     cardId = `${id}`;
-    cardElement;
+    localCard = cardElement;
   });
 
   heartActive.addEventListener('click', () => {
@@ -72,7 +74,6 @@ export const addCard = (link, name, likesLength, id, ownerId, likes, cardTemplat
 };
 
 basketButtonAccept.addEventListener('click', () => {
-  const localCard = document.querySelector('.element');
   deleteCard(cardId)
     .then((res) => {
       closePopup(elementBasket);
