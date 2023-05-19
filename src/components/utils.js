@@ -19,4 +19,8 @@ export const deleteErrors = (formElement) => {
   errorsLine.forEach((inputElement) => {
     inputElement.classList.remove('form__input_type_error');
   })
-};  
+};
+
+export function disableButton(form) {
+  form.classList.add('popup__save-button_inactive');
+};

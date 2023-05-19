@@ -1,5 +1,3 @@
-import { labelName, labelJob, labelCardName, labelLink, labelImgUrl } from './consts.js';
-
 export function request(url, options) {
   return fetch(url, options).then(checkResponse)
 };
@@ -27,17 +25,17 @@ export function deleteLike(ID) {
   return request(`${config.baseUrl}/cards/${ID}/likes`, { method: 'DELETE', headers: config.headers })
 };
 
-export function submitForm() {
-  return request(`${config.baseUrl}/users/me`, { method: 'PATCH', headers: config.headers, body: JSON.stringify({ name: labelName.value, about: labelJob.value }) })
+export function setUserData(body) {
+  return request(`${config.baseUrl}/users/me`, { method: 'PATCH', headers: config.headers, body: JSON.stringify(body) })
 };
 
-export function addCardForm() {
-  return request(`${config.baseUrl}/cards`, { method: 'POST', headers: config.headers, body: JSON.stringify({ name: labelCardName.value, link: labelLink.value }) })
+export function addNewCard(body) {
+  return request(`${config.baseUrl}/cards`, { method: 'POST', headers: config.headers, body: JSON.stringify(body) })
 };
 
-export function submitImgForm() {
+export function editAvatar(body) {
   return request(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH', headers: config.headers, body: JSON.stringify({ avatar: labelImgUrl.value })
+    method: 'PATCH', headers: config.headers, body: JSON.stringify(body)
   })
 };
 

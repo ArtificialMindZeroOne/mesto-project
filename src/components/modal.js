@@ -1,8 +1,8 @@
-import { labelCardName, labelLink, formElementNew, popupAdd, nameInput, labelName, jobInput, labelJob, cardsElements, popupProfile, popupOpenImg, cardTemplate } from './consts.js';
+import { labelCardName, labelLink, formElementNew, popupAdd, nameInput, labelName, jobInput, labelJob, cardsElements, popupProfile, popupOpenImg, cardTemplate, formAddCardSubmitButton } from './consts.js';
 import { toggleButtonState } from './validate.js';
 import { createCard } from './card.js';
 import { request, config } from '../components/api.js';
-import { deleteErrors } from '../components/utils.js';
+import { deleteErrors, disableButton } from '../components/utils.js';
 
 const closeByOverlayClose = (evt) => {
   if (evt.target.classList.contains('popup_opened')) {
@@ -40,4 +40,10 @@ export function openAddCardPopup() {
   openPopup(popupAdd);
   formElementNew.reset();
   deleteErrors(popupAdd);
+  disableButton(formAddCardSubmitButton);
+  formAddCardSubmitButton.disabled = true
+};
+
+export function openImg() {
+  openPopup(popupOpenImg);
 };

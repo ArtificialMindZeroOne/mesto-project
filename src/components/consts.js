@@ -9,7 +9,7 @@ export const labelJob = document.querySelector('[name="Job"]');
 export const jobInput = document.querySelector('.card__subtitle');
 export const formElementNew = document.querySelector('[name="add-card"]');
 export const popupCloseButtons = document.querySelectorAll('.popup__close-icon');
-export const formElement = document.querySelector('[name="edit-profile"]');
+export const profileForm = document.querySelector('[name="edit-profile"]');
 export const labelCardName = document.querySelector('[name="CardName"]');
 export const labelLink = document.querySelector('[name="Link"]');
 export const elementTitle = document.querySelector('.element__title');

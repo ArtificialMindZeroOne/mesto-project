@@ -37,11 +37,9 @@ export const createCard = (link, name, likesLength, id, ownerId, likes, cardTemp
     basketButton.classList.add('element__basket_my')
   }
 
-  const cardBasket = cardElement.querySelector('.element__basket');
-
   const valueId = `${id}`;
 
-  cardBasket.addEventListener('click', () => {
+  basketButton.addEventListener('click', () => {
     openPopup(elementBasket);
     cardId = `${id}`;
     localCard = cardElement;
@@ -53,6 +51,7 @@ export const createCard = (link, name, likesLength, id, ownerId, likes, cardTemp
         .then((res) => {
           const reloadLikes = res.likes.length;
           numberOfLikes.textContent = `${reloadLikes}`;
+          heartActive.classList.toggle('element__group_active');
         })
         .catch(console.error)
     } else {
@@ -60,10 +59,10 @@ export const createCard = (link, name, likesLength, id, ownerId, likes, cardTemp
         .then((res) => {
           const reloadLikes = res.likes.length;
           numberOfLikes.textContent = `${reloadLikes}`;
+          heartActive.classList.toggle('element__group_active');
         })
         .catch(console.error)
     };
-    heartActive.classList.toggle('element__group_active')
   });
 
   return cardElement;
