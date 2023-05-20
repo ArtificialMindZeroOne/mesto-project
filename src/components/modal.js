@@ -41,7 +41,6 @@ export function openAddCardPopup() {
   formElementNew.reset();
   deleteErrors(popupAdd);
   disableButton(formAddCardSubmitButton);
-  formAddCardSubmitButton.disabled = true
 };
 
 export function openImg() {

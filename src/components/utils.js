@@ -21,6 +21,7 @@ export const deleteErrors = (formElement) => {
   })
 };
 
-export function disableButton(form) {
-  form.classList.add('popup__save-button_inactive');
+export function disableButton(submitButton) {
+  submitButton.classList.add('popup__save-button_inactive');
+  submitButton.disabled = true;
 };

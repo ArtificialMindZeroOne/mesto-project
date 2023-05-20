@@ -30,7 +30,6 @@ function handleProfileFormSubmit(evt) {
       nameInput.textContent = labelName.value
       jobInput.textContent = labelJob.value
       disableButton(formProfileSubmitButton);
-      formProfileSubmitButton.disabled = true;
     })
     .catch(console.error)
     .finally(() => {
@@ -45,7 +44,6 @@ function handleAddCardFormSubmit(evt) {
     .then((res) => {
       addCard(res.link, res.name, res.likes.length, res._id, res.owner._id, res.likes);
       closePopup(popupAdd);
-      formElementNew.reset();
     })
     .catch(console.error)
     .finally(() => {
@@ -58,7 +56,6 @@ avatarEditButton.addEventListener('click', () => {
   formNewImg.reset();
   deleteErrors(avatarImg);
   disableButton(formAddImgSubmitButton);
-  formAddImgSubmitButton.disabled = true
 });
 
 function handleImgFormSubmit() {
@@ -67,7 +64,6 @@ function handleImgFormSubmit() {
     .then((res) => {
       imgCardAvatar.src = labelImgUrl.value;
       closePopup(avatarImg);
-      formNewImg.reset();
     })
     .catch(console.error)
     .finally(() => {
